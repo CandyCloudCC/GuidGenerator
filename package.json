@@ -1,0 +1,33 @@
+{
+  "name": "starcode.unique.guid.generator",
+  "version": "0.0.1",
+  "private": true,
+  "title": "Star Code unique guid generator",
+  "description": "Star Code unique guid generator",
+  "main": "./main.ts",
+  "scripts": {
+    "build": "sh build.sh"
+  },
+  "keywords": [
+    "koa"
+  ],
+  "dependencies": {
+    "koa": "^2.13.0",
+    "koa-body": "^4.2.0",
+    "koa-compress": "^5.0.1",
+    "koa-router": "^9.1.0",
+    "lodash": "^4.17.15",
+    "ntp-client": "^0.5.3"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.11.3",
+    "@types/koa-compress": "^4.0.0",
+    "@types/koa-router": "^7.4.1",
+    "@types/lodash": "^4.14.157",
+    "eslint": "^7.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.6",
+    "yarn": "^1.22.4"
+  }
+}

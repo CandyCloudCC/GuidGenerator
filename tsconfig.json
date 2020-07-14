@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "allowJs": false,
+    "checkJs": false,
+    "sourceMap": false,
+    "outDir": "./dist",
+    "rootDir": "./",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "pretty": true,
+    "listFiles": false,
+    "listEmittedFiles": false,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*", "config.ts"]
+}
