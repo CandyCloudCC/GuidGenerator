@@ -14,7 +14,7 @@ yarn install
 yarn run build
 ```
 
-## 2. 直接
+## 2. 运行
 
 ```bash
 # 1. node 直接运行
