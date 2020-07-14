@@ -53,7 +53,7 @@ Promise.allSettled(promiseArray).then(rs => {
   const filledRArray = rs.filter(x => x.status === 'fulfilled') as PromiseFulfilledResult<Date>[];
   if (filledRArray.length < 1) {
     console.error(`ntp server url were invalid:`, config.ntpServerUrlArray.join(','));
-    process.emit('SIGINT', 'SIGINT');
+    process.exit(1);
   } else {
     const avrg = filledRArray.reduce((acc, cur) => acc + cur.value.valueOf(), 0) / filledRArray.length;
     const standardTime = new Date(avrg);
