@@ -5,12 +5,10 @@
 ## 2. 运行
 
 ```bash
-WORKDIR=/home/tang/Documents/github/GuidGenerator
-
-docker run -d -p 21075:21075 \
+docker run -d -p 20300:20300 \
   --restart=always \
-  --name guid_generator \
-  --volume $WORKDIR/dist/config.js:/www/server/config.js:ro \
+  --name guid_generator
+  -v /etc/docker/config.d/20300-guid-generator-api.js:/www/server/config.js:ro \
   starcode/guid-generator:latest
 ```
 
