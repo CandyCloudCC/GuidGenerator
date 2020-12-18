@@ -5,6 +5,8 @@ import Router from 'koa-router';
 import koaCompress from 'koa-compress';
 const ntpClient = require('ntp-client');
 
+import { isDebugMode } from './utils';
+
 import { config } from '../config';
 
 let offset = 0;
@@ -81,6 +83,10 @@ setTimeout(function () {
 }, 5 * 1000);
 
 async function fillCacheId() {
+  if (isDebugMode()) {
+    console.log(`${new Date().toISOString()} : 当前缓存 id 数量 : ${cacheIdArray.length}`);
+  }
+
   if (cacheIdArray.length > maxCacheCount) {
     return;
   }

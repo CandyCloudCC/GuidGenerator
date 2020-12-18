@@ -19,4 +19,4 @@ yarn run cust_install
 
 cd $WORKSPACE_FOLDER
 
-docker image build --tag "starcode/guid-generator:1.0.4" --tag "starcode/guid-generator:latest" --force-rm ./
+docker image build --tag "starcode/guid-generator:1.0.5" --tag "starcode/guid-generator:latest" --force-rm ./
