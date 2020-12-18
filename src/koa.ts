@@ -11,6 +11,14 @@ let offset = 0;
 let preMilliseconds = 0;
 let getNTPCompleted = false;
 const serviceUniqueCode = _.padStart(config.serviceUniqueCode.toString(2), 8, '0');
+
+/**
+ * 缓存数据大小
+ */
+const maxCacheCount = 10 * 10000;
+const maxCountInBatch = 2 * 10000;
+const cacheIdArray: string[] = [];
+
 /**
  * 以 2020 年为基准元年，那么 41 位整数所表达得有效年份有约 69 年
  */
@@ -36,16 +44,16 @@ async function getCurrentMilliseconds(): Promise<number> {
   let curMS = new Date().valueOf();
   if (curMS === preMilliseconds) {
     return new Promise<number>((resolve, reject) =>
-      setImmediate(() =>
+      setTimeout(function nextMilliseconds() {
         getCurrentMilliseconds()
           .then(r => resolve(r))
-          .catch(reject)
-      )
+          .catch(reject);
+      }, 1)
     );
   }
 
   preMilliseconds = curMS;
-  return curMS - YearOneMS - offset;
+  return curMS - offset - YearOneMS;
 }
 
 const promiseArray = config.ntpServerUrlArray.map(x => getNTPTime(x));
@@ -60,6 +68,8 @@ Promise.allSettled(promiseArray).then(rs => {
     offset = new Date().valueOf() - standardTime.valueOf();
     getNTPCompleted = true;
     console.log('标准时间：', standardTime);
+
+    setTimeout(fillCacheId, 1);
   }
 });
 
@@ -70,15 +80,41 @@ setTimeout(function () {
   }
 }, 5 * 1000);
 
-async function generator(ctx: Koa.ParameterizedContext<Koa.DefaultState, Koa.DefaultContext>, next: Koa.Next) {
-  const currentMilliseconds = await getCurrentMilliseconds();
-  let timeStr = currentMilliseconds.toString(2);
-  if (timeStr.length > 41) {
-    ctx.throw(500, 'InternalServerError');
+async function fillCacheId() {
+  if (cacheIdArray.length > maxCacheCount) {
+    return;
   }
-  timeStr = '0' + timeStr;
-  const rst = numberStrArray.map(x => BigInt(`0b${timeStr}${serviceUniqueCode}${x}`).toString(10));
-  ctx.body = rst;
+
+  const currentMilliseconds = await getCurrentMilliseconds();
+  const timeStr = `0${currentMilliseconds.toString(2)}`;
+  const idArray = numberStrArray.map(x => BigInt(`0b${timeStr}${serviceUniqueCode}${x}`).toString(10));
+  cacheIdArray.splice(cacheIdArray.length, 0, ...idArray);
+
+  await fillCacheId();
+}
+
+async function generator(ctx: Koa.ParameterizedContext<Koa.DefaultState, Koa.DefaultContext>, next: Koa.Next) {
+  const accessToken = ctx.query.access_token;
+  let count = parseInt(ctx.query.count);
+  if (_.isEmpty(accessToken) || !_.isNumber(count)) {
+    ctx.throw(400, 'Bad Request');
+  }
+
+  if (!config.accessToken.includes(accessToken)) {
+    ctx.throw(403, 'Forbidden');
+  }
+
+  if (count > maxCountInBatch) {
+    count = maxCountInBatch;
+  }
+
+  if (cacheIdArray.length < count) {
+    await fillCacheId();
+  }
+
+  ctx.body = cacheIdArray.splice(0, count);
+
+  setTimeout(fillCacheId, 1);
 }
 
 export const router = new Router({ prefix: '/guid' });
