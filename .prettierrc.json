@@ -7,6 +7,6 @@
   "trailingComma": "none",
   "endOfLine": "lf",
   "newline-per-chained-call": true,
-  "printWidth": 512,
+  "printWidth": 128,
   "arrowParens": "avoid"
 }

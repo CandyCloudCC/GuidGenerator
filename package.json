@@ -1,17 +1,20 @@
 {
   "name": "starcode.unique.guid.generator",
-  "version": "0.0.1",
+  "version": "1.0.3",
   "private": true,
   "title": "Star Code unique guid generator",
   "description": "Star Code unique guid generator",
   "main": "./main.ts",
   "scripts": {
+    "cust_install": "yarn install --production",
     "build": "sh build.sh"
   },
   "keywords": [
     "koa"
   ],
   "dependencies": {
+    "ajv": "^7.0.1",
+    "ajv-formats": "^1.5.1",
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-compress": "^5.0.1",
@@ -27,6 +30,7 @@
     "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "prettier": "^2.0.5",
+    "ts-node": "^9.1.1",
     "typescript": "^3.9.6",
     "yarn": "^1.22.4"
   }

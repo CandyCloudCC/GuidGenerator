@@ -1,0 +1,16 @@
+.dockerignore
+.eslintrc.json
+.git/
+.gitignore
+.prettierignore
+.prettierrc.json
+.vscode/
+DockerImageBuild.sh
+Dockerfile
+README.md
+build.sh
+config.ts
+dist/config.js
+node_modules
+src
+tsconfig.json

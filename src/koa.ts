@@ -10,14 +10,14 @@ import { config } from '../config';
 let offset = 0;
 let preMilliseconds = 0;
 let getNTPCompleted = false;
-const serviceUniqueCode = _.padStart(config.serviceUniqueCode.toString(2), 10, '0');
+const serviceUniqueCode = _.padStart(config.serviceUniqueCode.toString(2), 8, '0');
 /**
  * 以 2020 年为基准元年，那么 41 位整数所表达得有效年份有约 69 年
  */
 const YearOneMS = new Date('Jan 01 2020 GMT').valueOf();
 const numberStrArray: string[] = [];
-for (let i = 0; i < 2 ** 12; i++) {
-  numberStrArray.push(_.padStart(i.toString(2), 12, '0'));
+for (let i = 0; i < 2 ** 14; i++) {
+  numberStrArray.push(_.padStart(i.toString(2), 14, '0'));
 }
 
 function getNTPTime(ntpServerUrl: string): Promise<Date> {

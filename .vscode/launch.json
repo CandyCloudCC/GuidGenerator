@@ -1,17 +1,25 @@
 {
-    // 使用 IntelliSense 了解相关属性。
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-      {
-        "type": "node",
-        "request": "launch",
-        "name": "DEBUG JS",
-        "sourceMaps": false,
-        "protocol": "inspector",
-        "program": "${workspaceFolder}/dist/src/main.js"
+  // 使用 IntelliSense 了解相关属性。
+  // 悬停以查看现有属性的描述。
+  // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "DEBUG TS",
+      "runtimeArgs": ["-r", "./node_modules/ts-node/register"],
+      "args": ["${workspaceFolder}/src/main.ts"],
+      "sourceMaps": true,
+      "cwd": "${workspaceFolder}",
+      "protocol": "inspector",
+      "internalConsoleOptions": "neverOpen",
+      "outputCapture": "console",
+      "console": "internalConsole",
+      "env": {
+        "NODE_ENV": "debug",
+        "TS_NODE_PROJECT": "${workspaceFolder}/tsconfig.json"
       }
-    ]
-  }
-  
+    }
+  ]
+}
