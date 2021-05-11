@@ -19,7 +19,7 @@
     "koa-body": "^4.2.0",
     "koa-compress": "^5.0.1",
     "koa-router": "^9.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "ntp-client": "^0.5.3"
   },
   "devDependencies": {
